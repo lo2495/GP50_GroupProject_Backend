@@ -52,6 +52,13 @@ def get_students():
     students = cursor.fetchall()
     return jsonify(students)
 
+@app.route('/api/teachers', methods=['GET'])
+def get_teachers():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM teacherrecords')
+    teachers = cursor.fetchall()
+    return jsonify(teachers)
+
 @app.route('/api/students/count', methods=['GET'])
 def get_total_students():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
