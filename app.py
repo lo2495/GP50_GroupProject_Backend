@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
+import random
 
 app = Flask(__name__)
 CORS(app)
@@ -80,5 +81,72 @@ def get_total_teachers():
         return jsonify({'total_teachers': total_teachers})
     else:
         return jsonify({'total_teachers': 0})   
+    
+@app.route('/api/Addteachers', methods=['POST'])
+def add_teacher():
+    data = request.get_json()
+    name = data.get('name')
+    dateOfEmployment = data.get('dateOfEmployment')
+    phoneNumber = data.get('phoneNumber')
+    department = data.get('department')
+    email = data.get('email')
+    designation = data.get('designation')
+    gender = data.get('gender')
+    stringdate= dateOfEmployment.replace("-","")
+    teacher_id = f"{name}{stringdate}"
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('INSERT INTO teacherrecords (TeacherID, Name, EmploymentDate, PhoneNumber, Department, Email, Designation, Gender) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+                   (teacher_id, name, dateOfEmployment, phoneNumber, department, email, designation, gender))
+    mysql.connection.commit()
+    cursor.execute('INSERT INTO useraccount (LoginID, password, Name, UserRole) VALUES (%s, %s, %s, %s)',
+                   (teacher_id,"123123", name, "teacher"))
+    mysql.connection.commit()
+    return jsonify({'success': True, 'message': 'Teacher added successfully'})
+
+@app.route('/api/AddStudents', methods=['POST'])
+def add_student():
+    student_ids = []
+    for _ in range(8):
+        student_id = random.randint(10000000, 99999999)
+    student_ids.append(student_id)
+    data = request.get_json()
+    name = data.get('Name')
+    BirthDate = data.get('BirthDate')
+    phoneNumber = data.get('phoneNumber')
+    Status = data.get('Status')
+    emails = []
+    for student_id in student_ids:
+        email = "s" + str(student_id)[:7] + "@live.hkmu.edu.hk"
+        emails.append(email)
+    Major = data.get('Major')
+    gender = data.get('Gender')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('INSERT INTO studentrecords (StudentID, Name, StudentEmail, Gender, BirthDate, PhoneNumber, Status, Major) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+                   (student_ids, name, emails, gender, BirthDate, phoneNumber, Status, Major))
+    mysql.connection.commit()
+    cursor.execute('INSERT INTO useraccount (LoginID, password, Name, UserRole) VALUES (%s, %s, %s, %s)',
+                   (student_ids,"123123", name, "student"))
+    mysql.connection.commit()
+    return jsonify({'success': True, 'message': 'Teacher added successfully'})
+
+
+@app.route('/api/teachers/<teacher_id>', methods=['DELETE'])
+def delete_teacher(teacher_id):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('DELETE FROM teacherrecords WHERE TeacherID = %s', (teacher_id,))
+    mysql.connection.commit()
+    cursor.execute('DELETE FROM useraccount WHERE LoginID = %s', (teacher_id,))
+    mysql.connection.commit()
+    return jsonify({'success': True, 'message': 'Teacher deleted successfully'})
+
+@app.route('/api/students/<student_id>', methods=['DELETE'])
+def delete_student(student_id):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('DELETE FROM studentrecords WHERE StudentID = %s', (student_id,))
+    mysql.connection.commit()
+    cursor.execute('DELETE FROM useraccount WHERE LoginID = %s', (student_id,))
+    mysql.connection.commit()
+    return jsonify({'success': True, 'message': 'Teacher deleted successfully'})
+
 if __name__ == '__main__':
     app.run()
