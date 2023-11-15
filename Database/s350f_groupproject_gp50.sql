@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-11-09 17:25:33
+-- 產生時間： 2023-11-15 03:23:47
 -- 伺服器版本： 10.4.21-MariaDB
 -- PHP 版本： 7.3.31
 
@@ -60,7 +60,7 @@ CREATE TABLE `teacherrecords` (
   `Name` varchar(255) NOT NULL,
   `Gender` char(1) NOT NULL,
   `Email` varchar(255) NOT NULL,
-  `EmploymentDate` varchar(255) NOT NULL,
+  `EmploymentDate` date NOT NULL,
   `PhoneNumber` varchar(8) NOT NULL,
   `Department` varchar(255) NOT NULL,
   `Designation` varchar(255) NOT NULL
@@ -71,9 +71,7 @@ CREATE TABLE `teacherrecords` (
 --
 
 INSERT INTO `teacherrecords` (`TeacherID`, `Name`, `Gender`, `Email`, `EmploymentDate`, `PhoneNumber`, `Department`, `Designation`) VALUES
-('Daniel20230901', 'Daniel Kim', 'M', 'danielkim@example.com', '2023-09-01', '74516789', 'Political Science', 'Professor'),
-('David20230701', 'David Lee', 'M', 'davidlee@example.com', '2023-07-01', '87545678', 'History', 'Professor'),
-('Jeff123', 'Jeff', 'M', 'Jeff@example.com', '2023-09-01', '12312323', 'Computer Science', 'Program Leader'),
+('Jeff20231101', 'Jeff', 'M', 'jeff@example.com', '2023-11-01', '12312312', 'Computer Science', 'Program Leader'),
 ('Jennifer20230801', 'Jennifer Chen', 'F', 'jenniferchen@example.com', '2023-08-01', '87654612', 'Economics', 'Associate Professor'),
 ('Jessica20231001', 'Jessica Wong', 'F', 'jessicawong@example.com', '2023-10-01', '76213210', 'Sociology', 'Assistant Professor'),
 ('Sarah20230601', 'Sarah Johnson', 'F', 'sarahjohnson@example.com', '2023-06-01', '98765455', 'Biology', 'Assistant Professor');
@@ -103,11 +101,7 @@ INSERT INTO `useraccount` (`LoginID`, `password`, `UserRole`, `Name`) VALUES
 ('98765432', '123123', 'student', 'Alex Johnson'),
 ('23456789', '123123', 'student', 'Emily Davis'),
 ('34567890', '123123', 'student', 'Michael Wilson'),
-('Sarah20230601', '123123', 'teacher', 'Sarah Johnson'),
-('David20230701', '123123', 'teacher', 'David Lee'),
-('Jennifer20230801', '123123', 'teacher', 'Jennifer Chen'),
-('Daniel20230901', '123123', 'teacher', 'Daniel Kim'),
-('Jessica20231001', '123123', 'teacher', 'Jessica Wong');
+('Jeff20231101', '123123', 'teacher', 'Jeff');
 
 --
 -- 已傾印資料表的索引
