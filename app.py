@@ -9,7 +9,7 @@ CORS(app)
 app.secret_key = 'xyzsdfg'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = '1234'
 app.config['MYSQL_DB'] = 's350f_groupproject_gp50'
 
 mysql = MySQL(app)
@@ -59,6 +59,13 @@ def get_teachers():
     cursor.execute('SELECT * FROM teacherrecords')
     teachers = cursor.fetchall()
     return jsonify(teachers)
+
+@app.route('/api/classes', methods=['GET'])
+def get_classes():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM ClassSchedule')
+    classes = cursor.fetchall()
+    return jsonify(classes)
 
 @app.route('/api/students/count', methods=['GET'])
 def get_total_students():
@@ -147,6 +154,26 @@ def delete_student(student_id):
     cursor.execute('DELETE FROM useraccount WHERE LoginID = %s', (student_id,))
     mysql.connection.commit()
     return jsonify({'success': True, 'message': 'Teacher deleted successfully'})
+
+@app.route('/api/AddClass', methods=['POST'])
+def add_Class():
+    data = request.get_json()
+    CourseName = data.get('CourseName')
+    ClassDate = data.get('ClassDate')
+    ClassType = data.get('ClassType')
+    Venue = data.get('Venue')
+    StartTime = data.get('StartTime')
+    EndTime = data.get('EndTime')
+    InstructorName = data.get('InstructorName')
+    ClassID = f"{CourseName}-{ClassDate}-{StartTime}"
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('INSERT INTO ClassSchedule (ClassID, CourseName, ClassType, ClassDate, StartTime, EndTime, Venue, InstructorName) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+                   (ClassID, CourseName, ClassType,  ClassDate,StartTime, EndTime, Venue, InstructorName))
+    mysql.connection.commit()
+    cursor.execute('INSERT INTO AttendanceRecords (ClassID, StudentID, Date, Status, Remarks) SELECT %s, StudentID, %s, NULL, NULL FROM studentrecords WHERE Major IN (SELECT Department FROM teacherrecords WHERE Name = %s)',
+               (ClassID, ClassDate, InstructorName))
+    mysql.connection.commit()
+    return jsonify({'success': True, 'message': 'added successfully'})
 
 if __name__ == '__main__':
     app.run()
