@@ -87,7 +87,9 @@ CREATE TABLE `studentrecords` (
   `BirthDate` date DEFAULT NULL,
   `PhoneNumber` varchar(8) DEFAULT NULL,
   `Status` varchar(255) NOT NULL,
-  `Major` varchar(255) NOT NULL
+  `Major` varchar(255) NOT NULL,
+  `Test` varchar(255) NOT NULL
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

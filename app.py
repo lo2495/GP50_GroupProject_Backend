@@ -9,7 +9,7 @@ CORS(app)
 app.secret_key = 'xyzsdfg'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '1234'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 's350f_groupproject_gp50'
 
 mysql = MySQL(app)
@@ -174,6 +174,26 @@ def add_Class():
                (ClassID, ClassDate, InstructorName))
     mysql.connection.commit()
     return jsonify({'success': True, 'message': 'added successfully'})
+
+
+@app.route('/api/EditScore', methods=['POST'])
+def edit_student():
+  
+    data = request.get_json()
+    name = data.get('Name')
+    Test = data.get('Test')
+   
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('UPDATE studentrecords SET Test = %s WHERE Name = %s;',
+                   ( Test,name  ))
+    mysql.connection.commit()
+ 
+    return jsonify({'success': True, 'message': 'Teacher added successfully'})
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run()
