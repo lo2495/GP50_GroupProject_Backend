@@ -176,19 +176,18 @@ def add_Class():
     return jsonify({'success': True, 'message': 'added successfully'})
 
 
-@app.route('/api/EditScore', methods=['POST'])
+@app.route('/api/EditGrade', methods=['POST'])
 def edit_student():
   
     data = request.get_json()
-    name = data.get('Name')
-    Test = data.get('Test')
+   
+    Grade = data.get('Grade')
    
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('UPDATE studentrecords SET Test = %s WHERE Name = %s;',
-                   ( Test,name  ))
+    cursor.execute("UPDATE studentrecords SET Grade = %s   ;", ( Grade ))
     mysql.connection.commit()
  
-    return jsonify({'success': True, 'message': 'Teacher added successfully'})
+    return jsonify({'success': True, 'message': ' Eited successfully'})
 
 
 

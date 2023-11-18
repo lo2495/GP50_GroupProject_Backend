@@ -88,7 +88,7 @@ CREATE TABLE `studentrecords` (
   `PhoneNumber` varchar(8) DEFAULT NULL,
   `Status` varchar(255) NOT NULL,
   `Major` varchar(255) NOT NULL,
-  `Test` varchar(255) NOT NULL
+  `Grade` varchar(255) NOT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -96,12 +96,12 @@ CREATE TABLE `studentrecords` (
 -- 傾印資料表的資料 `studentrecords`
 --
 
-INSERT INTO `studentrecords` (`StudentID`, `Name`, `StudentEmail`, `Gender`, `BirthDate`, `PhoneNumber`, `Status`, `Major`) VALUES
-('12345678', 'John Doe', 's1234567@live.hkmu.edu.hk', 'M', '1998-05-15', '12345678', 'undergraduate', 'Computer Science'),
-('23456789', 'Emily Davis', 's2345678@live.hkmu.edu.hk', 'F', '1997-03-10', '23456789', 'undergraduate', 'Chinese Studies'),
-('34567890', 'Michael Wilson', 's3456789@live.hkmu.edu.hk', 'M', '1996-08-27', '34567890', 'undergraduate', 'Computer Engineering'),
-('87654321', 'Jane Smith', 's8765432@live.hkmu.edu.hk', 'F', '1999-09-20', '87654321', 'undergraduate', 'Computer Science'),
-('98765432', 'Alex Johnson', 's9876543@live.hkmu.edu.hk', 'M', '2000-12-03', '98765432', 'undergraduate', 'Mathematics');
+INSERT INTO `studentrecords` (`StudentID`, `Name`, `StudentEmail`, `Gender`, `BirthDate`, `PhoneNumber`, `Status`, `Major`, `Grade`) VALUES
+('12345678', 'John Doe', 's1234567@live.hkmu.edu.hk', 'M', '1998-05-15', '12345678', 'undergraduate', 'Computer Science', 'A'),
+('23456789', 'Emily Davis', 's2345678@live.hkmu.edu.hk', 'F', '1997-03-10', '23456789', 'undergraduate', 'Chinese Studies', 'B'),
+('34567890', 'Michael Wilson', 's3456789@live.hkmu.edu.hk', 'M', '1996-08-27', '34567890', 'undergraduate', 'Computer Engineering', 'C'),
+('87654321', 'Jane Smith', 's8765432@live.hkmu.edu.hk', 'F', '1999-09-20', '87654321', 'undergraduate', 'Computer Science', 'B+'),
+('98765432', 'Alex Johnson', 's9876543@live.hkmu.edu.hk', 'M', '2000-12-03', '98765432', 'undergraduate', 'Mathematics', 'A-');
 
 -- --------------------------------------------------------
 
