@@ -180,10 +180,11 @@ def add_Class():
 def edit_student():
     data = request.get_json()
     Grade = data.get('Grade')
+    StudentID = data.get('StudentID')
     
     
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("UPDATE studentrecords SET Grade = %s ;", (Grade,))
+    cursor.execute("UPDATE studentrecords SET Grade = %s  WHERE StudentID = %s ;", (Grade,StudentID, ))
     mysql.connection.commit()
     
     return jsonify({'success': True, 'message': 'Edited successfully'})
