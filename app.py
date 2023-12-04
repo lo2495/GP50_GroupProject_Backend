@@ -268,6 +268,17 @@ def get_class_details(class_id):
     cursor.execute('SELECT * FROM ClassSchedule WHERE ClassID = %s', (class_id,))
     class_data = cursor.fetchone()
     return jsonify(class_data)
+    data = request.get_json()
+    Grade = data.get('Grade')
+    StudentID = data.get('StudentID')
+    
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("UPDATE studentrecords SET Grade = %s  WHERE StudentID = %s ;", (Grade,StudentID ))
+    mysql.connection.commit()
+    
+    return jsonify({'success': True, 'message': 'Edited successfully'})
+
 
 @app.route('/api/attendance/<student_id>', methods =['GET'])
 def get_class_id(student_id):
