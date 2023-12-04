@@ -184,7 +184,7 @@ def edit_student():
     
     
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("UPDATE studentrecords SET Grade = %s  WHERE StudentID = %s ;", (Grade,StudentID, ))
+    cursor.execute("UPDATE studentrecords SET Grade = %s  WHERE StudentID = %s ;", (Grade,StudentID ))
     mysql.connection.commit()
     
     return jsonify({'success': True, 'message': 'Edited successfully'})
