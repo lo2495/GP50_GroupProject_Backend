@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： db
--- 產生時間： 2023 年 11 月 17 日 00:38
+-- 產生時間： 2023 年 12 月 05 日 22:48
 -- 伺服器版本： 10.2.9-MariaDB-10.2.9+maria~jessie
 -- PHP 版本： 8.2.8
 
@@ -40,12 +40,12 @@ CREATE TABLE `AttendanceRecords` (
 --
 
 INSERT INTO `AttendanceRecords` (`ClassID`, `StudentID`, `Date`, `Status`, `Remarks`) VALUES
-('S350FSoftwareEngineering-2023-11-17-16:00', 12345678, '2023-11-17', NULL, NULL),
-('S350FSoftwareEngineering-2023-11-17-16:00', 87654321, '2023-11-17', NULL, NULL),
-('S320FDataBaseManagement-2023-11-21-11:00', 12345678, '2023-11-21', NULL, NULL),
-('S320FDataBaseManagement-2023-11-21-11:00', 87654321, '2023-11-21', NULL, NULL),
-('S312FJavaApplication-2023-11-20-11:00', 12345678, '2023-11-20', NULL, NULL),
-('S312FJavaApplication-2023-11-20-11:00', 87654321, '2023-11-20', NULL, NULL);
+('S350FSoftwareEngineering-2023-11-17-16:00', 12345678, '2023-11-17', NULL, 'QQQ'),
+('S350FSoftwareEngineering-2023-11-17-16:00', 87654321, '2023-11-17', NULL, 'WWW'),
+('S320FDataBaseManagement-2023-11-21-11:00', 12345678, '2023-11-21', 'Late', 'QWE'),
+('S320FDataBaseManagement-2023-11-21-11:00', 87654321, '2023-11-21', 'Present', 'ASD'),
+('S312FJavaApplication-2023-11-20-11:00', 12345678, '2023-11-20', 'Present', 'abcde'),
+('S312FJavaApplication-2023-11-20-11:00', 87654321, '2023-11-20', 'Absent', 'TESTING');
 
 -- --------------------------------------------------------
 
@@ -84,12 +84,11 @@ CREATE TABLE `studentrecords` (
   `Name` varchar(255) NOT NULL,
   `StudentEmail` varchar(255) NOT NULL,
   `Gender` char(1) NOT NULL,
-  `BirthDate` date DEFAULT NULL,
+  `BirthDate` varchar(255) DEFAULT NULL,
   `PhoneNumber` varchar(8) DEFAULT NULL,
   `Status` varchar(255) NOT NULL,
   `Major` varchar(255) NOT NULL,
-  `Grade` varchar(255) NOT NULL
-
+  `Grade` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -97,11 +96,11 @@ CREATE TABLE `studentrecords` (
 --
 
 INSERT INTO `studentrecords` (`StudentID`, `Name`, `StudentEmail`, `Gender`, `BirthDate`, `PhoneNumber`, `Status`, `Major`, `Grade`) VALUES
-('12345678', 'John Doe', 's1234567@live.hkmu.edu.hk', 'M', '1998-05-15', '12345678', 'undergraduate', 'Computer Science', 'F'),
-('23456789', 'Emily Davis', 's2345678@live.hkmu.edu.hk', 'F', '1997-03-10', '23456789', 'undergraduate', 'Chinese Studies', 'B+'),
-('34567890', 'Michael Wilson', 's3456789@live.hkmu.edu.hk', 'M', '1996-08-27', '34567890', 'undergraduate', 'Computer Engineering', 'C'),
-('87654321', 'Jane Smith', 's8765432@live.hkmu.edu.hk', 'F', '1999-09-20', '87654321', 'undergraduate', 'Computer Science', 'B+'),
-('98765432', 'Alex Johnson', 's9876543@live.hkmu.edu.hk', 'M', '2000-12-03', '98765432', 'undergraduate', 'Mathematics', 'A-');
+('12345678', 'John', 's1234567@live.hkmu.edu.hk', 'M', '2000-01-01', '12345678', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\", \"Grade\": \"B\"}, {\"CourseName\": \"S320FDataBaseManagement\", \"Grade\": \"C\"}, {\"CourseName\": \"S350FSoftwareEngineering\", \"Grade\": \"A\"}, {\"CourseName\": \"S381FServer-Side\", \"Grade\": \"D\"}]'),
+('23456789', 'Emily Davis', 's2345678@live.hkmu.edu.hk', 'F', '1997-03-10', '23456789', 'undergraduate', 'Chinese Studies', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]'),
+('34567890', 'Michael Wilson', 's3456789@live.hkmu.edu.hk', 'M', '1996-08-27', '34567890', 'undergraduate', 'Computer Engineering', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]'),
+('87654321', 'Jane Smith', 's8765432@live.hkmu.edu.hk', 'F', '1999-09-20', '87654321', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]'),
+('98765432', 'Alex Johnson', 's9876543@live.hkmu.edu.hk', 'M', '2000-12-03', '98765432', 'undergraduate', 'Mathematics', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]');
 
 -- --------------------------------------------------------
 
@@ -114,7 +113,7 @@ CREATE TABLE `teacherrecords` (
   `Name` varchar(255) NOT NULL,
   `Gender` char(1) NOT NULL,
   `Email` varchar(255) NOT NULL,
-  `EmploymentDate` date NOT NULL,
+  `EmploymentDate` varchar(255) NOT NULL,
   `PhoneNumber` varchar(8) NOT NULL,
   `Department` varchar(255) NOT NULL,
   `Designation` varchar(255) NOT NULL
@@ -125,7 +124,7 @@ CREATE TABLE `teacherrecords` (
 --
 
 INSERT INTO `teacherrecords` (`TeacherID`, `Name`, `Gender`, `Email`, `EmploymentDate`, `PhoneNumber`, `Department`, `Designation`) VALUES
-('Jeff20231101', 'JeffAuYeung', 'M', 'jeff@example.com', '2023-11-01', '12312312', 'Computer Science', 'Program Leader'),
+('Jeff', 'JeffAuYeung', 'M', 'jeff@example.com', '2023-11-01', '12312312', 'Computer Science', 'Program Leader'),
 ('Jennifer20230801', 'Jennifer Chen', 'F', 'jenniferchen@example.com', '2023-08-01', '87654612', 'Economics', 'Associate Professor'),
 ('Jessica20231001', 'Jessica Wong', 'F', 'jessicawong@example.com', '2023-10-01', '76213210', 'Sociology', 'Assistant Professor'),
 ('Sarah20230601', 'Sarah Johnson', 'F', 'sarahjohnson@example.com', '2023-06-01', '98765455', 'Biology', 'Assistant Professor');

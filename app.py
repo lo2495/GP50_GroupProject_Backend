@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import random
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -188,43 +189,44 @@ def add_Class():
                 (ClassID, ClassDate, InstructorName))
         mysql.connection.commit()
         return jsonify({'success': True, 'message': 'added successfully'})
-
-
-@app.route('/api/EditGrade', methods=['POST'])
-def edit_student():
-    
+@app.route('/api/updateGrade/<student_id>', methods=['PUT'])
+def update_grade(student_id):
+    if request.method == 'PUT':
         data = request.get_json()
-    
-        Grade = data.get('Grade')
-        StudentID = data.get('StudentID')
+        course_name = data['coursename']
+        grade_value = data['grade']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute("UPDATE studentrecords SET Grade = %s WHERE StudentID = %s   ;", ( Grade,StudentID ))
+        cursor.execute('SELECT Grade FROM studentrecords WHERE StudentID = %s', (student_id,))
+        result = cursor.fetchone()
+        existing_grades = json.loads(result['Grade']) if result and 'Grade' in result else []
+        for grade in existing_grades:
+            if grade.get('CourseName') == course_name:
+                grade['Grade'] = grade_value
+                break
+        cursor.execute('UPDATE studentrecords SET Grade = %s WHERE StudentID = %s', (json.dumps(existing_grades), student_id))
         mysql.connection.commit()
-    
-        return jsonify({'success': True, 'message': ' Eited successfully'})
 
+        return jsonify({'success': True, 'message': 'Grade updated successfully'})
+    else:
+        return 'Method Not Allowed'
+    
 @app.route('/api/user-profile', methods=['POST'])
 def get_user_profile():
-        if request.method == 'POST':
-            data = request.get_json()
-            LoginID = data.get('loginID')
-            print(f"Received LoginID: {LoginID}")
+        data = request.get_json()
+        loginID = data.get('loginID')
+        UserRole = data.get('UserRole')
+        if UserRole == 'student':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            if data.get('UserRole') == 'student':
-                cursor.execute('SELECT studentID, Name, StudentEmail, Gender, BirthDate, PhoneNumber, Status, Major FROM studentrecords WHERE StudentID = %s', (LoginID,))
-            elif data.get('UserRole') == 'teacher':
-                cursor.execute('SELECT TeacherID, Name, Email, Gender, EmploymentDate, PhoneNumber, Department, Designation FROM teacherrecords WHERE TeacherID = %s', (LoginID,))
-            else:
-                return jsonify({'success': False, 'message': 'Invalid user role!'})
+            cursor.execute('SELECT * FROM studentrecords WHERE StudentID = %s',(loginID,))
+            result = cursor.fetchone()
+            result['Grade'] = json.loads(result['Grade'])
+        elif UserRole == 'teacher':
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM teacherrecords WHERE TeacherID = %s',(loginID,))
+            result = cursor.fetchone()
+        print(result)
+        return jsonify(result)
 
-            user_profile = cursor.fetchone()
-            if user_profile:
-                return jsonify({'success': True, 'userProfile': user_profile})
-            else:
-                return jsonify({'success': False, 'message': 'User profile not found!'})
-        else:
-            return 'Method Not Allowed'
-        
 @app.route('/api/students/update-profile', methods=['POST'])
 def update_student_profile():
         data = request.get_json()
@@ -236,7 +238,6 @@ def update_student_profile():
         phone_number = data.get('PhoneNumber')
         status = data.get('Status')
         major = data.get('Major')
-    
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('UPDATE studentrecords SET Name = %s, StudentEmail = %s, Gender = %s, BirthDate = %s, PhoneNumber = %s, Status = %s, Major = %s WHERE StudentID = %s',
                    (name, email, gender, birth_date, phone_number, status, major, student_id))
@@ -284,6 +285,15 @@ def get_class_id(student_id):
     cursor.execute('SELECT ClassID FROM AttendanceRecords WHERE StudentID = %s', (student_id,))
     class_data = cursor.fetchall()
     return jsonify(class_data)
+
+
+@app.route('/api/student-details/<student_id>', methods =['GET'])
+def get_student_details(student_id):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM studentrecords WHERE StudentID = %s', (student_id,))
+    student_data = cursor.fetchone()
+    student_data['Grade'] = json.loads(student_data['Grade'])
+    return jsonify(student_data)
 
 @app.route('/api/classes/<class_id>/students', methods=['GET'])
 def get_class_students(class_id):
