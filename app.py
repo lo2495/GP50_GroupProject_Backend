@@ -124,33 +124,35 @@ def add_teacher():
                     (teacher_id,"123123", name, "teacher"))
         mysql.connection.commit()
         return jsonify({'success': True, 'message': 'Teacher added successfully'})
-
 @app.route('/api/AddStudents', methods=['POST'])
 def add_student():
-        student_ids = []
-        for _ in range(8):
-            student_id = random.randint(10000000, 99999999)
-        student_ids.append(student_id)
-        data = request.get_json()
-        name = data.get('Name')
-        BirthDate = data.get('BirthDate')
-        phoneNumber = data.get('phoneNumber')
-        Status = data.get('Status')
-        emails = []
-        for student_id in student_ids:
-            email = "s" + str(student_id)[:7] + "@live.hkmu.edu.hk"
-            emails.append(email)
-        Major = data.get('Major')
-        gender = data.get('Gender')
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('INSERT INTO studentrecords (StudentID, Name, StudentEmail, Gender, BirthDate, PhoneNumber, Status, Major) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
-                    (student_ids, name, emails, gender, BirthDate, phoneNumber, Status, Major))
-        mysql.connection.commit()
-        cursor.execute('INSERT INTO useraccount (LoginID, password, Name, UserRole) VALUES (%s, %s, %s, %s)',
-                    (student_ids,"123123", name, "student"))
-        mysql.connection.commit()
-        return jsonify({'success': True, 'message': 'Teacher added successfully'})
+    data = request.get_json()
+    name = data.get('Name')
+    BirthDate = data.get('BirthDate')
+    phoneNumber = data.get('phoneNumber')
+    Status = data.get('Status')
+    Major = data.get('Major')
+    gender = data.get('Gender')
+    if Major == 'Computer Science':
+        grade_data = [
+            {"CourseName": "S312FJavaApplication", "Grade": "N/A"},
+            {"CourseName": "S320FDataBaseManagement", "Grade": "N/A"},
+            {"CourseName": "S350FSoftwareEngineering", "Grade": "N/A"},
+            {"CourseName": "S381FServer-Side", "Grade": "N/A"}
+        ]
+    else:
+        grade_data = []
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    student_id = random.randint(10000000, 99999999)
+    email = "s" + str(student_id)[:7] + "@live.hkmu.edu.hk"
+    cursor.execute('INSERT INTO studentrecords (StudentID, Name, StudentEmail, Gender, BirthDate, PhoneNumber, Status, Major, Grade) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                   (student_id, name, email, gender, BirthDate, phoneNumber, Status, Major, json.dumps(grade_data)))
+    mysql.connection.commit()
+    cursor.execute('INSERT INTO useraccount (LoginID, password, Name, UserRole) VALUES (%s, %s, %s, %s)',
+                   (student_id, "123123", name, "student"))
+    mysql.connection.commit()
 
+    return jsonify({'success': True, 'message': 'Student added successfully'})
 
 @app.route('/api/teachers/<teacher_id>', methods=['DELETE'])
 def delete_teacher(teacher_id):
@@ -230,7 +232,7 @@ def get_user_profile():
 @app.route('/api/students/update-profile', methods=['POST'])
 def update_student_profile():
         data = request.get_json()
-        student_id = data.get('studentID')
+        student_id = data.get('StudentID')
         name = data.get('Name')
         email = data.get('StudentEmail')
         gender = data.get('Gender')
@@ -242,7 +244,9 @@ def update_student_profile():
         cursor.execute('UPDATE studentrecords SET Name = %s, StudentEmail = %s, Gender = %s, BirthDate = %s, PhoneNumber = %s, Status = %s, Major = %s WHERE StudentID = %s',
                    (name, email, gender, birth_date, phone_number, status, major, student_id))
         mysql.connection.commit()
-    
+        cursor.execute('UPDATE useraccount SET Name = %s WHERE LoginID = %s',
+                   (name, student_id))
+        mysql.connection.commit()
         return jsonify({'success': True, 'message': 'Profile updated successfully'})
 
 @app.route('/api/teachers/update-profile', methods=['POST'])
@@ -259,8 +263,9 @@ def update_teacher_profile():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('UPDATE teacherrecords SET Name = %s, Email = %s, Gender = %s, EmploymentDate = %s, PhoneNumber = %s, Department = %s, Designation = %s WHERE TeacherID = %s',
                    (name, email, gender, employment_date, phone_number, department, designation, teacher_id))
+        cursor.execute('UPDATE useraccount SET Name = %s WHERE LoginID = %s',
+                   (name, teacher_id))
         mysql.connection.commit()
-    
         return jsonify({'success': True, 'message': 'Profile updated successfully'})
 
 @app.route('/api/classes/<class_id>', methods=['GET'])
