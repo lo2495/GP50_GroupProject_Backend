@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： db
--- 產生時間： 2023 年 12 月 05 日 22:48
+-- 產生時間： 2023 年 12 月 06 日 21:59
 -- 伺服器版本： 10.2.9-MariaDB-10.2.9+maria~jessie
 -- PHP 版本： 8.2.8
 
@@ -44,7 +44,7 @@ INSERT INTO `AttendanceRecords` (`ClassID`, `StudentID`, `Date`, `Status`, `Rema
 ('S350FSoftwareEngineering-2023-11-17-16:00', 87654321, '2023-11-17', NULL, 'WWW'),
 ('S320FDataBaseManagement-2023-11-21-11:00', 12345678, '2023-11-21', 'Late', 'QWE'),
 ('S320FDataBaseManagement-2023-11-21-11:00', 87654321, '2023-11-21', 'Present', 'ASD'),
-('S312FJavaApplication-2023-11-20-11:00', 12345678, '2023-11-20', 'Present', 'abcde'),
+('S312FJavaApplication-2023-11-20-11:00', 12345678, '2023-11-20', 'Present', 'abcd'),
 ('S312FJavaApplication-2023-11-20-11:00', 87654321, '2023-11-20', 'Absent', 'TESTING');
 
 -- --------------------------------------------------------
@@ -96,11 +96,14 @@ CREATE TABLE `studentrecords` (
 --
 
 INSERT INTO `studentrecords` (`StudentID`, `Name`, `StudentEmail`, `Gender`, `BirthDate`, `PhoneNumber`, `Status`, `Major`, `Grade`) VALUES
-('12345678', 'John', 's1234567@live.hkmu.edu.hk', 'M', '2000-01-01', '12345678', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\", \"Grade\": \"B\"}, {\"CourseName\": \"S320FDataBaseManagement\", \"Grade\": \"C\"}, {\"CourseName\": \"S350FSoftwareEngineering\", \"Grade\": \"A\"}, {\"CourseName\": \"S381FServer-Side\", \"Grade\": \"D\"}]'),
-('23456789', 'Emily Davis', 's2345678@live.hkmu.edu.hk', 'F', '1997-03-10', '23456789', 'undergraduate', 'Chinese Studies', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]'),
-('34567890', 'Michael Wilson', 's3456789@live.hkmu.edu.hk', 'M', '1996-08-27', '34567890', 'undergraduate', 'Computer Engineering', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]'),
-('87654321', 'Jane Smith', 's8765432@live.hkmu.edu.hk', 'F', '1999-09-20', '87654321', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]'),
-('98765432', 'Alex Johnson', 's9876543@live.hkmu.edu.hk', 'M', '2000-12-03', '98765432', 'undergraduate', 'Mathematics', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]');
+('12345678', 'John', 's1234567@live.hkmu.edu.hk', 'M', '2000-01-01', '12345678', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\", \"Grade\": \"B\"}, {\"CourseName\": \"S320FDataBaseManagement\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S350FSoftwareEngineering\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S381FServer-Side\", \"Grade\": \"N/A\"}]'),
+('16842143', 'HelloWorld', 's1684214@live.hkmu.edu.hk', 'M', '2023-12-02', '99999999', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S320FDataBaseManagement\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S350FSoftwareEngineering\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S381FServer-Side\", \"Grade\": \"N/A\"}]'),
+('23456789', 'Emily Davis', 's2345678@live.hkmu.edu.hk', 'F', '1997-03-10', '23456789', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]'),
+('26745713', 'ABC Kun', 's2674571@live.hkmu.edu.hk', 'M', '2023-12-01', '12431219', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S320FDataBaseManagement\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S350FSoftwareEngineering\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S381FServer-Side\", \"Grade\": \"N/A\"}]'),
+('34567890', 'Michael Wilson', 's3456789@live.hkmu.edu.hk', 'M', '1996-08-27', '34567890', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]'),
+('48439282', 'Henry Lo', 's4843928@live.hkmu.edu.hk', 'M', '2002-01-06', '53181718', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S320FDataBaseManagement\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S350FSoftwareEngineering\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S381FServer-Side\", \"Grade\": \"N/A\"}]'),
+('87654321', 'Jane Smith', 's8765432@live.hkmu.edu.hk', 'F', '1999-09-20', '87654321', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\", \"Grade\": \"N/A\"}, {\"CourseName\": \"S320FDataBaseManagement\", \"Grade\": \"B\"}, {\"CourseName\": \"S350FSoftwareEngineering\", \"Grade\": \"C\"}, {\"CourseName\": \"S381FServer-Side\", \"Grade\": \"D\"}]'),
+('98765432', 'Alex Johnson', 's9876543@live.hkmu.edu.hk', 'M', '2000-12-03', '98765432', 'undergraduate', 'Computer Science', '[{\"CourseName\": \"S312FJavaApplication\",\"Grade\": \"A\"},{\"CourseName\": \"S320FDataBaseManagement\",\"Grade\": \"B\"},{\"CourseName\": \"S350FSoftwareEngineering\",\r\n\"Grade\": \"C\"},{\"CourseName\": \"S381FServer-Side\",\"Grade\": \"D\"}]');
 
 -- --------------------------------------------------------
 
@@ -124,10 +127,12 @@ CREATE TABLE `teacherrecords` (
 --
 
 INSERT INTO `teacherrecords` (`TeacherID`, `Name`, `Gender`, `Email`, `EmploymentDate`, `PhoneNumber`, `Department`, `Designation`) VALUES
-('Jeff', 'JeffAuYeung', 'M', 'jeff@example.com', '2023-11-01', '12312312', 'Computer Science', 'Program Leader'),
-('Jennifer20230801', 'Jennifer Chen', 'F', 'jenniferchen@example.com', '2023-08-01', '87654612', 'Economics', 'Associate Professor'),
-('Jessica20231001', 'Jessica Wong', 'F', 'jessicawong@example.com', '2023-10-01', '76213210', 'Sociology', 'Assistant Professor'),
-('Sarah20230601', 'Sarah Johnson', 'F', 'sarahjohnson@example.com', '2023-06-01', '98765455', 'Biology', 'Assistant Professor');
+('David20231107', 'David', 'M', 'david@gmail.com', '2023-11-07', '99992222', 'Computer Science', 'Associate Professor'),
+('DEF Kun20231102', 'DEF Kun', 'M', 'def@gmail.com', '2023-11-02', '99991111', 'Computer Science', 'Professor'),
+('demo20231102', 'demo', 'F', 'demo@example.com', '2023-11-02', '44442222', 'Computer Science', 'Program Leader'),
+('Jeff', 'Jeffffff', 'M', 'jeff@example.com', '2023-11-01', '12312312', 'Computer Science', 'Program Leader'),
+('Kelvin20231203', 'Kelvin', 'M', 'abc@gmail.com', '2023-12-03', '99990000', 'Computer Science', 'Associate Professor'),
+('testing20231105', 'testing', 'F', 'test@gmail.com', '2023-11-05', '12341234', 'Computer Science', 'Professor');
 
 -- --------------------------------------------------------
 
@@ -148,13 +153,20 @@ CREATE TABLE `useraccount` (
 
 INSERT INTO `useraccount` (`LoginID`, `password`, `UserRole`, `Name`) VALUES
 ('Admin', 'Admin', 'Admin', 'Admin'),
-('Jeff', '123123', 'teacher', 'JeffAuYeung'),
+('Jeff', '123123', 'teacher', 'Jeffffff'),
 ('12345678', '123123', 'student', 'John Doe'),
 ('87654321', '123123', 'student', 'Jane Smith'),
 ('98765432', '123123', 'student', 'Alex Johnson'),
 ('23456789', '123123', 'student', 'Emily Davis'),
 ('34567890', '123123', 'student', 'Michael Wilson'),
-('Jeff20231101', '123123', 'teacher', 'Jeff');
+('48439282', '123123', 'student', 'Henry Lo'),
+('26745713', '123123', 'student', 'ABC Kun'),
+('16842143', '123123', 'student', 'HelloWorld'),
+('Kelvin20231203', '123123', 'teacher', 'Kelvin'),
+('DEF Kun20231102', '123123', 'teacher', 'DEF Kun'),
+('David20231107', '123123', 'teacher', 'David'),
+('testing20231105', '123123', 'teacher', 'testing'),
+('demo20231102', '123123', 'teacher', 'demo');
 
 --
 -- 已傾印資料表的索引
