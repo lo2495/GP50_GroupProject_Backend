@@ -10,19 +10,22 @@ CORS(app)
 app.secret_key = 'xyzsdfg'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = '1234'
 app.config['MYSQL_DB'] = 's350f_groupproject_gp50'
 
 mysql = MySQL(app)
+
+@app.route('/api/hello', methods=['GET'])
+def hello():
+    message = "Hello, World!"
+    return message
 
 @app.route('/api/login', methods=['GET', 'POST'])
 def login():
         if request.method == 'POST':
             data = request.get_json()
             LoginID = data.get('loginID')
-            print(f"Received LoginID: {LoginID}")
             password = data.get('password')
-            print(f"Received Password: {password}")
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM useraccount WHERE LoginID = %s AND password = %s', (LoginID, password))
             user = cursor.fetchone()
@@ -37,7 +40,6 @@ def login():
                     'redirectUrl': '',
                     'message': ''
                 }
-                # Check the userrole and return the corresponding redirect URL
                 if user['UserRole'] == 'student':
                     response_data['redirectUrl'] = '/student-home'
                 elif user['UserRole'] == 'Admin':
@@ -224,7 +226,7 @@ def get_user_profile():
             result['Grade'] = json.loads(result['Grade'])
         elif UserRole == 'teacher':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM teacherrecords WHERE TeacherID = %s',(loginID,))
+            cursor.execute('SELECT * FROM teacherrecords WHERE TeacherID = %s',(loginID,))  
             result = cursor.fetchone()
         print(result)
         return jsonify(result)
@@ -329,4 +331,4 @@ def get_attendance_status_remark(student_id, class_id):
     return jsonify(attendance_data)
 
 if __name__ == '__main__':
-        app.run()
+        app.run(debug=True)
